@@ -20,7 +20,7 @@ jobs:
       
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@main
+        uses: docker/metadata-action@v3
         with:
           images: thetips4you/testjodejsapp
       
