@@ -55,14 +55,14 @@ jobs:
         
 
             
-            docker pull vanji11/cicdflow:$IMAGE_TAG
+           sudo docker pull vanji11/cicdflow:$IMAGE_TAG
 
             
             if [ "$(docker ps -q -f name=my-node-app)" ]; then
-              docker stop my-node-app
-              docker rm my-node-app
+              sudo docker stop my-node-app
+              sudo docker rm my-node-app
             fi
 
             
-            docker run -d --name my-node-app -p 4000:4000 vanji11/cicdflow:$IMAGE_TAG
+           sudo docker run -d --name my-node-app -p 4000:4000 vanji11/cicdflow:$IMAGE_TAG
           EOF
