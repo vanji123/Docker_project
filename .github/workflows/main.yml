@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no -i private_key.pem -T ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
           
             if ! command -v docker &> /dev/null; then
               sudo apt-get update
