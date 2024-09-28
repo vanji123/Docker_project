@@ -40,14 +40,17 @@ jobs:
         run: |
           echo "${{ secrets.EC2_PRIVATE_KEY }}" > private_key.pem
           chmod 600 private_key.pem
-          ssh -o StrictHostKeyChecking=no -i private_key.pem -T ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-          
-            if ! command -v docker &> /dev/null; then
-              sudo apt-get update
-              sudo apt-get install -y docker.io
-              sudo systemctl start docker
-              sudo systemctl enable docker
-            fi
+
+          echo "Attempting to SSH into ${EC2_HOST} as ${EC2_USER}"
+
+          ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -i private_key.pem -T ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          if ! command -v docker &> /dev/null; then
+           sudo apt-get update
+           sudo apt-get install -y docker.io
+           sudo systemctl start docker
+           sudo systemctl enable docker
+          fi
+          EOF
 
             
             docker pull vanji11/cicdflow:${{ steps.meta.outputs.tags }}
