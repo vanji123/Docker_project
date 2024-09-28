@@ -50,15 +50,12 @@ jobs:
            sudo systemctl start docker
            sudo systemctl enable docker
           fi
-           IMAGE_TAG="${{ steps.meta.outputs.tags }}"
-          if [ -z "$IMAGE_TAG" ]; then
-          echo "Error: Docker image tag is empty"
-          exit 1
-          fi
-          EOF
+           IMAGE_TAG="master"
+             echo "Using Docker image tag: $IMAGE_TAG"
+        
 
             
-            docker pull vanji11/cicdflow:${{ steps.meta.outputs.tags }}
+            docker pull vanji11/cicdflow:$IMAGE_TAG
 
             
             if [ "$(docker ps -q -f name=my-node-app)" ]; then
@@ -67,5 +64,5 @@ jobs:
             fi
 
             
-            docker run -d --name my-node-app -p 4000:4000 vanji11/cicdflow:${{ steps.meta.outputs.tags }}
+            docker run -d --name my-node-app -p 4000:4000 vanji11/cicdflow:$IMAGE_TAG
           EOF
