@@ -50,6 +50,11 @@ jobs:
            sudo systemctl start docker
            sudo systemctl enable docker
           fi
+           IMAGE_TAG="${{ steps.meta.outputs.tags }}"
+          if [ -z "$IMAGE_TAG" ]; then
+          echo "Error: Docker image tag is empty"
+          exit 1
+          fi
           EOF
 
             
